@@ -1,13 +1,19 @@
+import Navbar from 'features/ui/NavBar/NavBar';
+import { Routes, Route } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+
 function App() {
+  const Home = lazy(() => import('pages/Home'));
+
   return (
-    <>
-      <div className="flex justify-center bg-sky-800 px-4 py-2  text-white hover:bg-sky-800 sm:px-8 sm:py-3">
-        <h1>Vite + React</h1>
-      </div>
-      <div className="flex justify-center bg-sky-800 px-4 py-2  text-white hover:bg-sky-800 sm:px-8 sm:py-3">
-        <h1>Vite + React</h1>
-      </div>
-    </>
+    <div className="relative h-screen">
+      <Suspense fallback={<div>loading...</div>}>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </Suspense>
+    </div>
   );
 }
 
