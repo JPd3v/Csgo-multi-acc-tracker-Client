@@ -1,16 +1,26 @@
-import Navbar from 'features/ui/NavBar/NavBar';
 import { Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
+import { MainLayout } from 'layout';
 
 function App() {
   const Home = lazy(() => import('pages/Home'));
+  const PageNotFound = lazy(() => import('pages/PageNotFound'));
 
   return (
     <div className="relative h-screen">
-      <Suspense fallback={<div>loading...</div>}>
-        <Navbar />
+      <Suspense
+        fallback={
+          <>
+            <MainLayout />
+            <div>loading... place holder</div>
+          </>
+        }
+      >
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="*" element={<PageNotFound />} />
+          </Route>
         </Routes>
       </Suspense>
     </div>
