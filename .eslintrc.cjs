@@ -10,7 +10,6 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:prettier/recommended',
   ],
-  overrides: [],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     tsconfigRootDir: __dirname,
@@ -23,4 +22,10 @@ module.exports = {
     'react/react-in-jsx-scope': 0,
     'prettier/prettier': ['warn', { endOfLine: 'auto' }],
   },
+  overrides: [
+    {
+      files: ['src/**/*Slice.ts'],
+      rules: { 'no-param-reassign': ['error', { props: false }] },
+    },
+  ],
 };
