@@ -7,7 +7,7 @@ function App() {
   const PageNotFound = lazy(() => import('pages/PageNotFound'));
 
   return (
-    <div className="relative h-screen">
+    <div className="relative">
       <Suspense
         fallback={
           <>
