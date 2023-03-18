@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { MainLayout } from 'layout';
+import { ModalManager } from 'features/modals';
 
 function App() {
   const Home = lazy(() => import('pages/Home'));
@@ -22,6 +23,7 @@ function App() {
             <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>
+        <ModalManager />
       </Suspense>
     </div>
   );
