@@ -21,6 +21,9 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 0,
     'prettier/prettier': ['warn', { endOfLine: 'auto' }],
+    '@typescript-eslint/naming-convention': 'off',
+    'no-underscore-dangle': 'off',
+    'react/require-default-props': 'off',
   },
   overrides: [
     {
