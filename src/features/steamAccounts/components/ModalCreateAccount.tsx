@@ -14,6 +14,8 @@ export default function ModalCreateAccount() {
     register,
     formState: { errors, dirtyFields },
     handleSubmit,
+    setError,
+    clearErrors,
   } = useForm<IcreateAccount>({
     mode: 'onChange',
     shouldUnregister: true,
@@ -24,6 +26,7 @@ export default function ModalCreateAccount() {
 
   function handleClose() {
     dispatch(closeAll());
+    clearErrors('root');
   }
 
   useEffect(() => {
@@ -31,6 +34,20 @@ export default function ModalCreateAccount() {
       dispatch(closeAll());
     }
   }, [createAccount.isSuccess, dispatch]);
+
+  useEffect(() => {
+    if (createAccount.isError) {
+      const serverError = createAccount.error.response.data;
+      serverError.errors?.map((error) =>
+        setError(error.param as keyof IcreateAccount, {
+          type: 'validate',
+          message: error.msg,
+        })
+      );
+
+      setError('root', { type: 'validate', message: serverError.message });
+    }
+  }, [createAccount.isError, setError, createAccount.error?.response.data]);
 
   function onSubmit(formInputs: IcreateAccount) {
     const modifiedInputs = Object.fromEntries(
@@ -59,7 +76,13 @@ export default function ModalCreateAccount() {
             type="text"
             autoComplete="off"
             required
-            {...register('name', { required: 'Account name is required' })}
+            {...register('name', {
+              required: 'Account name is required',
+              maxLength: {
+                value: 15,
+                message: "Account name can't be longer than 15 characters",
+              },
+            })}
             id="account name"
             className=" rounded-lg bg-slate-700 p-1 text-center"
             aria-labelledby="name-error"
@@ -67,7 +90,7 @@ export default function ModalCreateAccount() {
           />
         </label>
         {errors.name ? (
-          <p className="text-red-400 " id="name-error">
+          <p className="text-center text-red-400 " id="name-error">
             {errors.name.message}
           </p>
         ) : null}
@@ -91,18 +114,14 @@ export default function ModalCreateAccount() {
         </label>
 
         {errors.steam_url ? (
-          <p className=" text-red-400 " id="steam-url-error">
+          <p className=" text-center text-red-400 " id="steam-url-error">
             {errors.steam_url.message}
           </p>
         ) : null}
-
-        {createAccount.isError ? (
-          <div className="text-red-400" role="alert">
-            <p>{createAccount.error.response.data.message}</p>
-            {createAccount.error.response.data.errors?.map((error) => (
-              <p key={error.msg}>{error.msg}</p>
-            ))}
-          </div>
+        {errors.root ? (
+          <p className=" text-center text-red-400" role="alert">
+            {errors.root?.message}
+          </p>
         ) : null}
 
         {createAccount.isLoading ? (
@@ -121,6 +140,7 @@ export default function ModalCreateAccount() {
           <button
             type="submit"
             className="rounded-lg bg-blue-700 p-2 px-4  hover:bg-blue-600"
+            disabled={createAccount.isLoading}
           >
             Create
           </button>

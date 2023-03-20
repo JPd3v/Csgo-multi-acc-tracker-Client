@@ -9,7 +9,12 @@ interface IerrorResponse {
 
 interface IErrorresponseData {
   message?: string;
-  errors?: [{ msg: string }];
+  errors?: IValdiationErrors[];
+}
+interface IValdiationErrors {
+  msg: string;
+  param: string;
+  value: string;
 }
 
 export type { IaxiosDefaultErrors };
