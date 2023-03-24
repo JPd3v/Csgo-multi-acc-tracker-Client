@@ -2,19 +2,36 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from 'stores/store';
 
 interface SliceState {
-  newSteamAccount: boolean;
+  newSteamAccount: ImodalState;
+  deleteSteamAccount: ImodalState;
+}
+
+interface ImodalState {
+  show: boolean;
+  extraInfo?: IpayloadExtra;
+}
+
+interface Ipayload {
+  modal: keyof SliceState;
+  extraInfo?: IpayloadExtra;
+}
+
+interface IpayloadExtra {
+  id?: string;
 }
 
 const initialState: SliceState = {
-  newSteamAccount: false,
+  newSteamAccount: { show: false },
+  deleteSteamAccount: { show: false },
 };
 
 const modalSlice = createSlice({
   name: 'modals',
   initialState,
   reducers: {
-    open: (state, action: PayloadAction<keyof SliceState>) => {
-      state[action.payload] = true;
+    open: (state, action: PayloadAction<Ipayload>) => {
+      state[action.payload.modal].show = true;
+      state[action.payload.modal].extraInfo = action.payload.extraInfo;
       return state;
     },
     closeAll: () => initialState,
