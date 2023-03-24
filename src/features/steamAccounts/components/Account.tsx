@@ -1,19 +1,48 @@
+import EditAccount from 'features/steamAccounts/components/EditAccount';
 import { IsteamAccount } from 'features/steamAccounts/types';
-import React from 'react';
+import { useState } from 'react';
+import OptionsDropDown from './OptionsDropDown';
 
 interface Iprops {
   account: IsteamAccount;
 }
 
 export default function Account({ account }: Iprops) {
-  const { _id, money_revenue, name, user_id, steam_url } = account;
+  const [isEditing, setIsEditing] = useState(false);
+  const { _id, money_revenue, name, steam_url } = account;
+
+  function handleCancelEdit() {
+    setIsEditing(false);
+  }
+
+  function handleOpenEdit() {
+    setIsEditing(true);
+  }
+
   return (
-    <div>
-      <p>{_id}</p>
-      <p>{money_revenue}</p>
-      <p>{name}</p>
-      <p>{user_id}</p>
-      <p>{steam_url}</p>
-    </div>
+    <article className="relative h-[32rem] w-full flex-shrink-0 rounded-lg border-2 border-slate-600/40 bg-slate-800 p-2 sm:w-96">
+      {isEditing ? (
+        <EditAccount
+          id={_id}
+          account={{ name, steam_url }}
+          onCancelEdit={() => handleCancelEdit()}
+        />
+      ) : (
+        <>
+          <p className="text-xl">
+            <a href={steam_url} rel="noreferrer" target="_blank">
+              {name}
+            </a>
+          </p>
+
+          <OptionsDropDown
+            onOpenEdit={() => handleOpenEdit()}
+            accountId={_id}
+          />
+
+          <p className="text-xl">account total revenue: ${money_revenue}</p>
+        </>
+      )}
+    </article>
   );
 }
