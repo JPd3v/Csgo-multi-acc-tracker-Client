@@ -7,7 +7,7 @@ export default function SteamAccountsHub() {
   const dispatch = useDispatch();
 
   function handleOpenForm() {
-    dispatch(open('newSteamAccount'));
+    dispatch(open({ modal: 'newSteamAccount' }));
   }
 
   return (

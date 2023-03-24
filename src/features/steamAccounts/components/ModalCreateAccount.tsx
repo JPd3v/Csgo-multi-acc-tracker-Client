@@ -58,7 +58,7 @@ export default function ModalCreateAccount() {
     );
     createAccount.mutate(modifiedInputs as IcreateAccount);
   }
-  return modalsStates.newSteamAccount ? (
+  return modalsStates.newSteamAccount.show ? (
     <ModalWrapper>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -67,7 +67,7 @@ export default function ModalCreateAccount() {
       >
         <label htmlFor="account name" className="flex w-4/5 flex-col ">
           <p>
-            Account name{' '}
+            Account name
             <span className="text-red-400" aria-hidden="true">
               *
             </span>
