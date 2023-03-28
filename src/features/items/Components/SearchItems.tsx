@@ -25,17 +25,17 @@ export default function SearchItems({ onItemSelection }: Iprops) {
     return undefined;
   }
   return (
-    <div className="relative ">
+    <div className="w-full bg-neutral-800 ">
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           type="text"
           placeholder="item name"
           {...register('itemName')}
-          className="w-full rounded-lg bg-slate-700  placeholder:text-blue-100"
+          className="w-full rounded-lg bg-neutral-800  placeholder:text-blue-100"
         />
       </form>
 
-      <div className="translate absolute flex w-full translate-y-2 flex-col bg-slate-900 ">
+      <div className="absolute flex w-full flex-col bg-neutral-800 ">
         {searchDrop.data?.map((item) => (
           <button
             type="button"
