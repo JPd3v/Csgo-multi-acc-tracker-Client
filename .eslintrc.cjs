@@ -20,6 +20,7 @@ module.exports = {
   plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
     'react/react-in-jsx-scope': 0,
+    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     'prettier/prettier': ['warn', { endOfLine: 'auto' }],
     '@typescript-eslint/naming-convention': 'off',
     'no-underscore-dangle': 'off',
