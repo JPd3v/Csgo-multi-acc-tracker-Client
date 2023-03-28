@@ -1,3 +1,4 @@
+import { DropsList } from 'features/drops';
 import EditAccount from 'features/steamAccounts/components/EditAccount';
 import { IsteamAccount } from 'features/steamAccounts/types';
 import { useState } from 'react';
@@ -20,7 +21,7 @@ export default function Account({ account }: Iprops) {
   }
 
   return (
-    <article className="relative h-[32rem] w-full flex-shrink-0 rounded-lg border-2 border-slate-600/40 bg-slate-800 p-2 sm:w-96">
+    <article className="relative flex h-[32rem] w-full flex-shrink-0 flex-col rounded-lg border-2 border-slate-600/40 bg-slate-800 p-2 sm:w-96 ">
       {isEditing ? (
         <EditAccount
           id={_id}
@@ -40,7 +41,10 @@ export default function Account({ account }: Iprops) {
             accountId={_id}
           />
 
-          <p className="text-xl">account total revenue: ${money_revenue}</p>
+          <DropsList accountId={_id} />
+          <p className="text-xl">
+            account total revenue: ${money_revenue.toFixed(2)}
+          </p>
         </>
       )}
     </article>
