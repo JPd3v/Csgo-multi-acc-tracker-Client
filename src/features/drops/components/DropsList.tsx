@@ -29,7 +29,7 @@ export default function DropsList({ accountId }: Iprops) {
   }
 
   return (
-    <div className=" relative flex w-full flex-1 flex-col overflow-auto rounded bg-slate-900">
+    <div className=" relative flex w-full flex-1 flex-col gap-3 overflow-auto rounded bg-slate-900">
       {drops.isInitialLoading ? (
         <div className="flex h-full items-center justify-center overflow-hidden">
           <LoadingSpinner size="4rem" />
