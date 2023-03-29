@@ -5,6 +5,7 @@ interface IsteamAccount {
   user_id: string;
   name: string;
   steam_url?: string;
+  last_drop_timestamp: string;
   money_revenue: number;
 }
 
@@ -14,4 +15,13 @@ type InfiniteSteamAccounts = InfiniteData<{
 
 type IcreateAccount = Pick<IsteamAccount, 'name' | 'steam_url'>;
 
-export type { IsteamAccount, IcreateAccount, InfiniteSteamAccounts };
+type IupdateAccount = Partial<
+  Pick<IsteamAccount, 'name' | 'steam_url' | 'last_drop_timestamp'>
+>;
+
+export type {
+  IsteamAccount,
+  IcreateAccount,
+  InfiniteSteamAccounts,
+  IupdateAccount,
+};

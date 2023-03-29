@@ -4,15 +4,15 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { axiosConfig } from 'config';
-import { IcreateAccount, IsteamAccount } from 'features/steamAccounts/types';
+import { IupdateAccount, IsteamAccount } from 'features/steamAccounts/types';
 import { IaxiosDefaultErrors } from 'types';
 
 interface ImutationParams {
   accountId: string;
-  editedData: IcreateAccount;
+  editedData: IupdateAccount;
 }
 
-async function editAccount(accountId: string, editedData: IcreateAccount) {
+async function editAccount(accountId: string, editedData: IupdateAccount) {
   const req = await axiosConfig.put(`/steamAccounts/${accountId}`, editedData);
 
   return req.data;
