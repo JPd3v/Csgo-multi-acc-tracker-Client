@@ -1,4 +1,4 @@
-import { formatDistanceStrict, intervalToDuration } from 'date-fns';
+import { add, formatDistanceStrict, intervalToDuration } from 'date-fns';
 import EditDropTimestamp from 'features/steamAccounts/components/EditDropTimestamp';
 import { useState } from 'react';
 import { IoSettingsSharp } from 'react-icons/io5';
@@ -22,14 +22,12 @@ export default function DropTimestamp({
     setIsEditing(false);
   }
 
-  const formatedTime = formatDistanceStrict(
-    new Date(),
-    new Date(lastDropTimestamp)
-  );
+  const dateWithDropCooldown = add(new Date(lastDropTimestamp), { days: 7 });
+  const formatedTime = formatDistanceStrict(new Date(), dateWithDropCooldown);
 
   const dateInterval = intervalToDuration({
-    start: new Date(lastDropTimestamp),
-    end: new Date(),
+    start: new Date(),
+    end: new Date(lastDropTimestamp),
   });
 
   const isDropAvailable = dateInterval.days && dateInterval.days! >= 7;
@@ -44,7 +42,7 @@ export default function DropTimestamp({
     <div
       className={`${
         isDropAvailable ? 'bg-green-700' : 'bg-red-700'
-      } my-1 flex  w-full p-2 font-bold`}
+      } my-1 flex  w-full rounded p-2 font-bold`}
     >
       {isDropAvailable ? (
         <div className="flex w-full flex-row rounded  text-center">
@@ -61,7 +59,7 @@ export default function DropTimestamp({
         <div className=" w-full  rounded ">
           <div>
             <div className="flex flex-row  items-center text-center">
-              <p className="flex-1">last drop: {formatedTime} ago</p>
+              <p className="flex-1">Next drop in: {formatedTime}</p>
               <button
                 type="button"
                 className="flex w-9  flex-row items-center justify-center "
