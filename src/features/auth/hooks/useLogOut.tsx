@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { axiosConfig } from 'config';
+import type { IauthUserToken } from '../types';
 
 async function logOut() {
   const req = await axiosConfig.post(
@@ -15,8 +16,12 @@ export default function useLogOut() {
   return useMutation({
     mutationFn: logOut,
     onSuccess() {
-      queryClient.invalidateQueries(['authUserToken']);
-      queryClient.removeQueries(['authUserToken']);
+      queryClient.setQueryData<IauthUserToken>(['authUserToken'], (prev) => {
+        if (!prev) {
+          return undefined;
+        }
+        return { ...prev, accessToken: null };
+      });
       queryClient.clear();
     },
   });

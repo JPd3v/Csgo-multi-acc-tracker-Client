@@ -4,7 +4,7 @@ interface IuserInfo {
 }
 
 interface IauthUserToken {
-  accessToken: string;
+  accessToken: string | null;
 }
 
 export type { IuserInfo, IauthUserToken };

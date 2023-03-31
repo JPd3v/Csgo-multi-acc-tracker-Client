@@ -1,11 +1,12 @@
 import { useAuthToken } from 'features/auth';
-import { SteamAccountsHub } from 'features/steamAccounts/';
+import { SteamAccountsHub } from 'features/steamAccounts';
 
 export default function Home() {
   const auth = useAuthToken();
+
   return (
     <main className="m-3 h-fit">
-      {auth.data ? (
+      {auth.data?.accessToken ? (
         <SteamAccountsHub />
       ) : (
         <div className="flex h-72 items-center justify-center p-5 text-center text-3xl font-bold">
