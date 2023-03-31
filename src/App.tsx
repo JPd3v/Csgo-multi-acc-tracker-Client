@@ -14,7 +14,7 @@ function App() {
         fallback={
           <>
             <MainLayout />
-            <div className="fixed top-0 left-0 flex h-full w-full items-center justify-center">
+            <div className="absolute top-0 left-0 right-0 bottom-0 m-auto flex h-fit w-fit flex-col items-center justify-center">
               <LoadingSpinner size="4rem" />
             </div>
           </>
@@ -26,7 +26,6 @@ function App() {
             <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>
-
         <ModalManager />
       </Suspense>
     </div>
