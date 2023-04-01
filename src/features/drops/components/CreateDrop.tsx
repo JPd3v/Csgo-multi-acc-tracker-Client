@@ -5,6 +5,7 @@ import { ItemsInfo } from 'features/items';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { ImCancelCircle } from 'react-icons/im';
+import { MdOutlineOpenInNew } from 'react-icons/md';
 
 interface Iprops extends Pick<ItemsInfo, 'item_data' | 'item_name'> {
   accountId: string;
@@ -26,7 +27,7 @@ export default function CreateDrop({
     mode: 'onChange',
     defaultValues: { price: item_data[0].price, quality: item_data[0].quality },
   });
-
+  let communityMarketLink = item_data[0].steam_url;
   const newDrop = useCreateDrop();
 
   useEffect(() => {
@@ -37,11 +38,11 @@ export default function CreateDrop({
   }, [newDrop.isSuccess, onCancel]);
 
   function handleQualityChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    setValue(
-      'price',
-      item_data.find((item) => item.quality === event.target.value)
-        ?.price as number
+    const currentItem = item_data.find(
+      (item) => item.quality === event.target.value
     );
+    setValue('price', currentItem?.price as number);
+    communityMarketLink = currentItem?.steam_url as string;
   }
 
   function onSubmit(IformInputs: IformInputs) {
@@ -51,7 +52,6 @@ export default function CreateDrop({
       steam_account_id: accountId,
     });
   }
-
   return (
     <form
       noValidate
@@ -92,11 +92,22 @@ export default function CreateDrop({
         ) : null}
 
         <label htmlFor="item-price" className="flex w-16 flex-col  ">
-          Price
+          <p className="flex gap-1">
+            Price
+            <a
+              href={communityMarketLink}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="view item price in steam"
+            >
+              <MdOutlineOpenInNew />
+            </a>
+          </p>
           <input
             {...register('price')}
             type="number"
             id="item-price"
+            step=".01"
             className="rounded-lg bg-slate-700 p-1"
           />
         </label>

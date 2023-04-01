@@ -102,6 +102,7 @@ export default function EditDropTimestamp({
           type="button"
           className="flex w-8  flex-row items-center justify-center "
           onClick={onClose}
+          aria-label="cancel drop timestamp update"
         >
           <IoCloseOutline size="70%" />
         </button>

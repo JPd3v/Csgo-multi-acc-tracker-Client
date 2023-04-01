@@ -51,6 +51,7 @@ export default function DropTimestamp({
             type="button"
             className="flex w-9  flex-row items-center justify-center "
             onClick={handleOpenEdit}
+            aria-label="update drop timestamp"
           >
             <IoSettingsSharp size="70%" />
           </button>
@@ -63,6 +64,7 @@ export default function DropTimestamp({
               <button
                 type="button"
                 className="flex w-9  flex-row items-center justify-center "
+                aria-label="update drop timestamp"
                 onClick={handleOpenEdit}
               >
                 <IoSettingsSharp size="70%" />
