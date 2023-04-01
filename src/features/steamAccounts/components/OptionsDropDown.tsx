@@ -41,7 +41,7 @@ export default function OptionsDropDown({ onOpenEdit, accountId }: Iprops) {
   }, [hasClickedOutside]);
 
   return (
-    <div ref={dropDownRef} className="absolute right-3 top-3 z-10">
+    <div ref={dropDownRef} className="absolute right-3 top-3 z-20">
       <button
         type="button"
         aria-label="Account options"

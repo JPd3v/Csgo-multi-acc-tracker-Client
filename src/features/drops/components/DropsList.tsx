@@ -29,64 +29,65 @@ export default function DropsList({ accountId }: Iprops) {
   }
 
   return (
-    <div className=" relative flex w-full flex-1 flex-col gap-3 overflow-auto rounded bg-slate-900">
-      {drops.isInitialLoading ? (
-        <div className="flex h-full items-center justify-center overflow-hidden">
-          <LoadingSpinner size="4rem" />
+    <>
+      {showAddDropForm && !item ? (
+        <div className="sticky top-0 z-10">
+          <SearchItems
+            onItemSelection={(selectedItem: ItemsInfo) =>
+              handleItemSelection(selectedItem)
+            }
+          />
         </div>
-      ) : (
-        <>
-          {showAddDropForm && !item ? (
-            <div className="sticky top-0">
-              <SearchItems
-                onItemSelection={(selectedItem: ItemsInfo) =>
-                  handleItemSelection(selectedItem)
-                }
-              />
-            </div>
-          ) : null}
+      ) : null}
+      <div className=" relative flex w-full flex-1 flex-col gap-3 overflow-auto rounded bg-slate-900">
+        {drops.isInitialLoading ? (
+          <div className="flex h-full items-center justify-center overflow-hidden">
+            <LoadingSpinner size="4rem" />
+          </div>
+        ) : (
+          <>
+            {item && showAddDropForm ? (
+              <div className="sticky top-0">
+                <CreateDrop
+                  item_data={item.item_data}
+                  item_name={item.item_name}
+                  accountId={accountId}
+                  onCancel={() => handleCloseForm()}
+                />
+              </div>
+            ) : null}
 
-          {item && showAddDropForm ? (
-            <div className="sticky top-0">
-              <CreateDrop
-                item_data={item.item_data}
-                item_name={item.item_name}
-                accountId={accountId}
-                onCancel={() => handleCloseForm()}
-              />
-            </div>
-          ) : null}
+            {drops.hasNextPage ? (
+              <button
+                type="button"
+                onClick={() => drops.fetchNextPage()}
+                className=" flex items-center justify-center gap-2 bg-neutral-800"
+              >
+                load more
+                {drops.isLoading ? <LoadingSpinner /> : null}
+              </button>
+            ) : null}
 
-          {drops.hasNextPage ? (
-            <button
-              type="button"
-              onClick={() => drops.fetchNextPage()}
-              className=" flex items-center justify-center gap-2 bg-gray-800"
-            >
-              load more
-              {drops.isLoading ? <LoadingSpinner /> : null}
-            </button>
-          ) : null}
-
-          {drops.data?.pages.map((page) =>
-            page.drops.map((drop) => <Drop drop={drop} key={drop._id} />)
-          )}
-          {!showAddDropForm && !item && !drops.isError ? (
-            <button
-              type="button"
-              className="sticky bottom-1 mt-3 w-1/2 self-center justify-self-center rounded bg-blue-700"
-              onClick={handleOpenForm}
-            >
-              Add Drop
-            </button>
-          ) : null}
-          {drops.isError ? (
-            <p className="mt-9 flex flex-col items-center justify-center text-center text-lg font-medium">
-              <BiError size="3rem" /> something went wrong in our server
-            </p>
-          ) : null}
-        </>
-      )}
-    </div>
+            {drops.data?.pages.map((page) =>
+              page.drops.map((drop) => <Drop drop={drop} key={drop._id} />)
+            )}
+            {!showAddDropForm && !item && !drops.isError ? (
+              <button
+                type="button"
+                className="sticky bottom-1 mt-3 w-1/2 self-center justify-self-center rounded bg-blue-700"
+                onClick={handleOpenForm}
+              >
+                Add Drop
+              </button>
+            ) : null}
+            {drops.isError ? (
+              <p className="mt-9 flex flex-col items-center justify-center text-center text-lg font-medium">
+                <BiError size="3rem" /> something went wrong in our server
+              </p>
+            ) : null}
+          </>
+        )}
+      </div>
+    </>
   );
 }
